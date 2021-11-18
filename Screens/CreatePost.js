@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, SafeAreaView, Image, StyleSheet, Platform, StatusBar, ScrollView} from 'react-native';
+import {Text, View, SafeAreaView, Image, StyleSheet, Platform, StatusBar, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -9,7 +9,8 @@ constructor(){
     super();
     this.state={
         previewImage: "image_2",
-        dropdownHeight: 40
+        dropdownHeight: 40,
+        caption: ''
     }
 }
 
@@ -43,7 +44,7 @@ render(){
                         source = {preview_images[this.state.previewImage]}
                         style = {styles.previewImage}
                     />
-                    <View style={{height : RFValue(this.state.dropdownHeight)}}></View>
+                    <View style={{height : RFValue(this.state.dropdownHeight)}}>
                     <DropDownPicker
                         items={[
                             {label:"Image 1", value:"image_1"},
@@ -55,22 +56,22 @@ render(){
                             {label:"Image 7", value:"image_7"}
                         ]}
                         defaultValue={this.state.previewImage}
-                        containerStyle={{
-                            height: 40,
-                            borderRadius: 20,
-                            marginBottom: 10
-                          }}
-                          onOpen={()=>{
+                        onOpen={()=>{
                             this.setState({
                                 dropdownHeight: 170
                             })
-                            }
-                        }
+                        }}
                         onClose={()=>{
                             this.setState({
                                 dropdownHeight: 50
                             })
                         }}
+                        containerStyle={{
+                            height: 40,
+                            borderRadius: 20,
+                            marginBottom: 10
+                          }}
+                          
                           style={{ backgroundColor: "white" }}
                           itemStyle={{
                             justifyContent: "flex-start"
@@ -83,6 +84,23 @@ render(){
                             })
                         }}
                     />
+                    
+                    </View>
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={(text) => {
+                            this.setState({
+                                caption: text
+                            })
+                        }}
+                        placeholder={"Caption"}
+                        placeholderTextColor= "white"
+                    />
+
+                    <TouchableOpacity style={styles.submitButton}>
+                        <Text style={styles.submitText}>Submit</Text>
+                    </TouchableOpacity>
+                    
                 </ScrollView>
                 
             </View>
@@ -123,7 +141,7 @@ const styles = StyleSheet.create({
             fontSize: RFValue(28),
         },
         fieldsContainer: {
-            flex: 0.85
+            flex: 0.8
         },
         previewImage: {
             width: "92%",
@@ -131,6 +149,28 @@ const styles = StyleSheet.create({
             alignSelf: "center",
             resizeMode: "center",
             borderRadius: RFValue(10)
+        },
+        textInput: {
+            borderWidth: 2,
+            borderRadius: 25,
+            borderColor: "white",
+            color: "white"
+        },
+        submitButton: {
+            borderColor: "white",
+            borderWidth: 2,
+            borderRadius: 25,
+            backgroundColor: "violet",
+            width: 150,
+            height: 50,
+            alignSelf: "center",
+            alignItems: "center",
+            justifyContent: "center"
+        },
+        submitText: {
+            color: "white",
+            fontWeight: "bold",
+            fontSize: 30
         }
     
 })
